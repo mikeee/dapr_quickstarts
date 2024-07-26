@@ -40,14 +40,13 @@ type App struct {
 var app App
 
 func main() {
-
 	droidJobs := []DroidJob{
 		{Name: "R2-D2", Job: "Oil Change", DueTime: "5s"},
 		{Name: "C-3PO", Job: "Memory Wipe", DueTime: "15s"},
 		{Name: "BB-8", Job: "Internal Gyroscope Check", DueTime: "30s"},
 	}
 
-	//Create new Dapr client
+	// Create new Dapr client
 	daprClient, err := daprc.NewClient()
 	if err != nil {
 		panic(err)
@@ -58,16 +57,7 @@ func main() {
 		daprClient: daprClient,
 	}
 
-	// Wait for job-service to be up and running
-	for {
-		_, err = daprClient.InvokeMethod(context.Background(), "job-service", "healthz", "GET")
-		if err != nil {
-			fmt.Println("job-service not available, retrying...")
-		} else {
-			break
-		}
-		time.Sleep(2 * time.Second) // Wait for 2 seconds before retrying
-	}
+	time.Sleep(time.Second * 5)
 
 	// Schedule R2-D2 job
 	err = schedule(droidJobs[0])
@@ -108,7 +98,7 @@ func main() {
 	}
 	fmt.Println("Job deleted: ", droidJobs[2].Name)
 
-	//time.Sleep(15 * time.Second)
+	// time.Sleep(15 * time.Second)
 }
 
 // Schedules a job by invoking grpc service from job-service passing a DroidJob as an argument
@@ -141,7 +131,7 @@ func get(droidJob DroidJob) (string, error) {
 		Data:        []byte(droidJob.Name),
 	}
 
-	//get job
+	// get job
 	resp, err := app.daprClient.InvokeMethodWithContent(context.Background(), "job-service", "getJob", "GET", content)
 	if err != nil {
 		fmt.Println("Error invoking method: ", err)
