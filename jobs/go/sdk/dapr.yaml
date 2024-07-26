@@ -2,6 +2,7 @@ version: 1
 common:
   daprdLogDestination: console
   logLevel: debug
+  schedulerHostAddress: localhost:50006
 
 apps:
   - appDirPath: ./job-service/
