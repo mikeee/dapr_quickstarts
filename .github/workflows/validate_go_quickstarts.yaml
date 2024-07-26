@@ -110,7 +110,7 @@ jobs:
 
       - name: Override dapr
         run: |
-          cp ./dapr-dapr/dist/linux_arm64/release/daprd ~/.dapr/bin/daprd
+          cp ./dapr-dapr/dist/linux_amd64/release/daprd ~/.dapr/bin/daprd
 
       - name: Validate building blocks with GO
         run: |
