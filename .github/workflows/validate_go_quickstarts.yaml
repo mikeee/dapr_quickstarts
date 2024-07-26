@@ -98,4 +98,4 @@ jobs:
       - name: Validate building blocks with GO
         run: |
           cd ./jobs/go/sdk/
-          make validate
+          dapr run -f .
